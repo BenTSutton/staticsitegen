@@ -69,10 +69,14 @@ def split_nodes_link(old_nodes):
     return new_nodes
 
 def text_to_textnodes(text):
-    delimiters_dict = {"**":TextType.BOLD, "*":TextType.ITALIC, "`":TextType.CODE}
+    delimiters = [
+        ("**", TextType.BOLD),
+        ("*", TextType.ITALIC),
+        ("`", TextType.CODE),
+    ]
     current_nodes = [TextNode(text, TextType.NORMAL)]
-    for key, value in delimiters_dict.items():
-        current_nodes = split_nodes_delimiter(current_nodes, key, value)
+    for delimiter in delimiters:
+        current_nodes = split_nodes_delimiter(current_nodes, delimiter[0], delimiter[1])
     current_nodes = split_nodes_image(current_nodes)
     current_nodes = split_nodes_link(current_nodes)
     return current_nodes
